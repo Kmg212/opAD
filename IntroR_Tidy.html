@@ -1704,15 +1704,103 @@ Kenedith Méndez - Gutiérrez &amp; Javier Rodríguez Barrios
 <span id="cb48-9"><a href="#cb48-9"></a>         <span class="at">tl.cex =</span> <span class="fl">0.8</span>, <span class="at">tl.col =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
-
-<img src="https://oceanexpert.org/uploads/institutes/10047/instituteLogo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
-
-</div>
-</section><section id="gráficos-de-relaciones-lineales-por-pares-significativas.-output" class="slide level2 output-location-slide"><h2>Gráficos de relaciones lineales por pares significativas.</h2><div class="cell output-location-slide" data-layout-align="center">
+</section>
+<section id="gráficos-de-relaciones-lineales-por-pares-significativas.-output" class="slide level2 output-location-slide"><h2>Gráficos de relaciones lineales por pares significativas.</h2><div class="cell output-location-slide" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="IntroR_Tidy_files/figure-revealjs/unnamed-chunk-28-1.png" width="768"></p>
+</figure>
+</div>
+</div>
+</div></section><section id="gráficos-de-dispersión-con-tendencia-lineal." class="slide level2">
+<h2>Gráficos de dispersión con tendencia lineal.</h2>
+<ul>
+<li>Retomemos los datos bajo el nombre de &lt;&lt;<code>Matriz_Conj</code>&gt;&gt; para crear un gráfico que muestre la relación lineal entre el pH y la abundancia de los filos (general y especifica) según el tipo de suelo.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>Matriz_Conj <span class="sc">%&gt;%</span> </span>
+<span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">select</span>(ID,Tipo_Suelo,Sitio,pH_Suelo,Actinobacteria, </span>
+<span id="cb49-3"><a href="#cb49-3"></a>         Proteobacteria, Firmicutes,Ascomycota,</span>
+<span id="cb49-4"><a href="#cb49-4"></a>         Basidiomycota,Abundancia) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-5"><a href="#cb49-5"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(Actinobacteria, Proteobacteria, Firmicutes,</span>
+<span id="cb49-6"><a href="#cb49-6"></a>                 Ascomycota,Basidiomycota,Abundancia),</span>
+<span id="cb49-7"><a href="#cb49-7"></a>               <span class="at">names_to =</span> <span class="st">"Variable"</span>, <span class="at">values_to =</span> <span class="st">"Valor"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb49-8"><a href="#cb49-8"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span> pH_Suelo, <span class="at">y=</span>Valor, <span class="at">fill=</span>Tipo_Suelo, <span class="at">color=</span>Tipo_Suelo))<span class="sc">+</span></span>
+<span id="cb49-9"><a href="#cb49-9"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y<span class="sc">~</span>x, <span class="at">method =</span> <span class="st">"lm"</span>)<span class="sc">+</span></span>
+<span id="cb49-10"><a href="#cb49-10"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"pH del suelo"</span>, <span class="at">y=</span><span class="st">"Abundancia"</span>)<span class="sc">+</span></span>
+<span id="cb49-11"><a href="#cb49-11"></a>  <span class="fu">facet_wrap</span>(<span class="at">facets =</span> .<span class="sc">~</span>Variable ,<span class="at">scales =</span> <span class="st">"free"</span>,<span class="at">nrow =</span> <span class="dv">2</span>,</span>
+<span id="cb49-12"><a href="#cb49-12"></a>             <span class="at">labeller =</span> (<span class="fu">labeller</span>(<span class="at">Variable=</span><span class="fu">c</span>(<span class="at">Abundancia=</span><span class="st">"Total"</span>))))<span class="sc">+</span></span>
+<span id="cb49-13"><a href="#cb49-13"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb49-14"><a href="#cb49-14"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb49-15"><a href="#cb49-15"></a>         <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="cn">NA</span>))<span class="sc">+</span></span>
+<span id="cb49-16"><a href="#cb49-16"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>),<span class="at">n.breaks =</span> <span class="dv">6</span>,<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</section>
+<section id="gráficos-de-dispersión-con-tendencia-lineal.-output" class="slide level2 output-location-slide"><h2>Gráficos de dispersión con tendencia lineal.</h2><div class="cell output-location-slide" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="IntroR_Tidy_files/figure-revealjs/unnamed-chunk-29-1.png" width="768"></p>
+</figure>
+</div>
+</div>
+</div></section><section id="anexo-1.-gráficos-de-barras-100-apiladas." class="slide level2">
+<h2>Anexo 1. Gráficos de barras 100% apiladas.</h2>
+<ul>
+<li>Retomemos el gráfico de abundancia y cambiemos a abundancia relativa.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>Resumen<span class="sc">$</span>Grupo<span class="ot">&lt;-</span><span class="fu">factor</span>(Resumen<span class="sc">$</span>Grupo, </span>
+<span id="cb50-2"><a href="#cb50-2"></a>                      <span class="at">levels =</span><span class="fu">c</span>(<span class="st">"Actinobacteria"</span>, <span class="st">"Firmicutes"</span>, <span class="st">"Proteobacteria"</span>, </span>
+<span id="cb50-3"><a href="#cb50-3"></a>                                <span class="st">"Ascomycota"</span>, <span class="st">"Basidiomycota"</span>))</span>
+<span id="cb50-4"><a href="#cb50-4"></a>Resumen <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Tipo_Suelo,<span class="at">y=</span>n, <span class="at">fill=</span>Grupo))<span class="sc">+</span></span>
+<span id="cb50-5"><a href="#cb50-5"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">color=</span><span class="st">"white"</span>, <span class="at">position =</span> <span class="st">"fill"</span>, <span class="at">linewidth=</span><span class="fl">0.8</span>)<span class="sc">+</span></span>
+<span id="cb50-6"><a href="#cb50-6"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Tipo de suelo"</span>, <span class="at">y=</span><span class="st">"Abundancia relativa"</span>)<span class="sc">+</span></span>
+<span id="cb50-7"><a href="#cb50-7"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span><span class="fu">scale_y_continuous</span>(<span class="at">n.breaks =</span> <span class="dv">10</span>,<span class="at">labels =</span> scales<span class="sc">::</span>percent)<span class="sc">+</span></span>
+<span id="cb50-8"><a href="#cb50-8"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">name=</span><span class="st">"Filo"</span>,<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#f3dbc0"</span>,<span class="st">"#ffb4a2"</span>, <span class="st">"#e5989b"</span>,<span class="st">"#b5838d"</span>, <span class="st">"#6d597a"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</section>
+<section id="anexo-1.-gráficos-de-barras-100-apiladas.-output" class="slide level2 output-location-slide"><h2>Anexo 1. Gráficos de barras 100% apiladas.</h2><div class="cell output-location-slide" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="IntroR_Tidy_files/figure-revealjs/unnamed-chunk-30-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div></section><section id="anexo-2.-gráficos-de-dispersión-con-ellipses." class="slide level2">
+<h2>Anexo 2. Gráficos de dispersión con ellipses.</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>Matriz_Conj <span class="sc">%&gt;%</span> </span>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">select</span>(ID,Tipo_Suelo,Sitio,pH_Suelo,Actinobacteria, </span>
+<span id="cb51-3"><a href="#cb51-3"></a>         Proteobacteria, Firmicutes,Ascomycota,</span>
+<span id="cb51-4"><a href="#cb51-4"></a>         Basidiomycota,Abundancia) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-5"><a href="#cb51-5"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(Actinobacteria, Proteobacteria, Firmicutes,</span>
+<span id="cb51-6"><a href="#cb51-6"></a>                 Ascomycota,Basidiomycota,Abundancia),</span>
+<span id="cb51-7"><a href="#cb51-7"></a>               <span class="at">names_to =</span> <span class="st">"Variable"</span>, <span class="at">values_to =</span> <span class="st">"Valor"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb51-8"><a href="#cb51-8"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span> pH_Suelo, <span class="at">y=</span>Valor, <span class="at">fill=</span>Tipo_Suelo, <span class="at">color=</span>Tipo_Suelo))<span class="sc">+</span></span>
+<span id="cb51-9"><a href="#cb51-9"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span> <span class="fu">stat_ellipse</span>(<span class="at">geom =</span> <span class="st">"polygon"</span>,<span class="at">alpha=</span><span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb51-10"><a href="#cb51-10"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"pH del suelo"</span>, <span class="at">y=</span><span class="st">"Abundancia"</span>)<span class="sc">+</span></span>
+<span id="cb51-11"><a href="#cb51-11"></a>  <span class="fu">facet_wrap</span>(<span class="at">facets =</span> .<span class="sc">~</span>Variable ,<span class="at">scales =</span> <span class="st">"free"</span>,<span class="at">nrow =</span> <span class="dv">2</span>,</span>
+<span id="cb51-12"><a href="#cb51-12"></a>             <span class="at">labeller =</span> (<span class="fu">labeller</span>(<span class="at">Variable=</span><span class="fu">c</span>(<span class="at">Abundancia=</span><span class="st">"Total"</span>))))<span class="sc">+</span></span>
+<span id="cb51-13"><a href="#cb51-13"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb51-14"><a href="#cb51-14"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb51-15"><a href="#cb51-15"></a>         <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="cn">NA</span>))<span class="sc">+</span></span>
+<span id="cb51-16"><a href="#cb51-16"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>),<span class="at">n.breaks =</span> <span class="dv">6</span>,<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+<img src="https://oceanexpert.org/uploads/institutes/10047/instituteLogo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
+
+</div>
+</section><section id="anexo-2.-gráficos-de-dispersión-con-ellipses.-output" class="slide level2 output-location-slide"><h2>Anexo 2. Gráficos de dispersión con ellipses.</h2><div class="cell output-location-slide" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="IntroR_Tidy_files/figure-revealjs/unnamed-chunk-31-1.png" width="768"></p>
 </figure>
 </div>
 </div>
